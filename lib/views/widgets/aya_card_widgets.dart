@@ -1,5 +1,6 @@
 import 'package:alfurqan/controllers/AudioController.dart';
 import 'package:alfurqan/controllers/bookmark_controller.dart';
+import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
 import 'package:alfurqan/controllers/tafseer_controller.dart';
@@ -20,6 +21,7 @@ class AyaCardWidgets extends StatelessWidget {
     required this.surahController,
     required this.bookMarkController,
     required this.audioController,
+    required this.lastReadController,
   });
 
   final Ayah ayah;
@@ -27,6 +29,7 @@ class AyaCardWidgets extends StatelessWidget {
   final SurahController surahController;
   final BookmarkController bookMarkController;
   final AudioController audioController;
+  final LastReadController lastReadController;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,7 @@ class AyaCardWidgets extends StatelessWidget {
                 surahController: surahController,
                 audioController: audioController,
                 bookMarkController: bookMarkController,
+                lastReadController: lastReadController,
               ),
             ],
           ),

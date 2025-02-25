@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alfurqan/services/tafseer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,9 +10,6 @@ import 'tafseer_controller.dart';
 class SettingsController extends GetxController {
   var fontSize = 22.0.obs;
   var isDarkMode = false.obs;
-  var lastReadSurah = ''.obs; // اسم آخر سورة
-  var lastReadSurahId = 0.obs; // رقم آخر سورة
-  var lastReadAyah = 0.obs; // رقم آخر آية
 
   //==========================================
   final selectedTafseerIdentifier = 'ar.muyassar'.obs;
@@ -33,9 +32,7 @@ class SettingsController extends GetxController {
     // تحميل الإعدادات المحفوظة
     fontSize.value = prefs.getDouble('fontSize') ?? 22.0;
     isDarkMode.value = prefs.getBool('isDarkMode') ?? false;
-    lastReadSurah.value = prefs.getString('lastReadSurah') ?? '';
-    lastReadSurahId.value = prefs.getInt('lastReadSurahId') ?? 0;
-    lastReadAyah.value = prefs.getInt('lastReadAyah') ?? 0;
+
     // update(); // تحديث القيم فورًا عند تحميلها
   }
 
@@ -50,7 +47,7 @@ class SettingsController extends GetxController {
         'ar.kathir': 'تفسير ابن كثير',
       };
     } catch (e) {
-      print('Error loading tafseers: $e');
+      log('Error loading tafseers: $e');
       availableTafseers.value = {
         'ar.muyassar': 'تفسير الميسر',
       };
@@ -77,19 +74,6 @@ class SettingsController extends GetxController {
   String getCurrentTafseerName() {
     final tafseerController = Get.find<TafseerController>();
     return tafseerController.selectedTafseerName.value;
-  }
-
-  void updateLastRead(
-    String surahName,
-    int ayahNumber,
-    int surahId,
-  ) {
-    lastReadSurah.value = surahName;
-    lastReadAyah.value = ayahNumber;
-    lastReadSurahId.value = surahId;
-    prefs.setString('lastReadSurah', surahName);
-    prefs.setInt('lastReadSurahId', surahId);
-    prefs.setInt('lastReadAyah', ayahNumber);
   }
 
   void loadSettings() {

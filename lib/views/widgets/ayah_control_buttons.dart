@@ -1,8 +1,10 @@
 import 'package:alfurqan/controllers/AudioController.dart';
 import 'package:alfurqan/controllers/bookmark_controller.dart';
+import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
 import 'package:alfurqan/models/aya_model.dart';
 import 'package:alfurqan/utils/app_color.dart';
+import 'package:alfurqan/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -15,6 +17,7 @@ class AyahControlButtons extends StatelessWidget {
   final SurahController surahController;
   final AudioController audioController;
   final BookmarkController bookMarkController;
+  final LastReadController lastReadController;
 
   const AyahControlButtons({
     Key? key,
@@ -22,12 +25,14 @@ class AyahControlButtons extends StatelessWidget {
     required this.surahController,
     required this.audioController,
     required this.bookMarkController,
+    required this.lastReadController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        //زر مشاركة الاية
         IconButton(
           onPressed: () => Get.to(() => AyahScreenshotScreen(
                 ayahText: ayah.text,
@@ -41,6 +46,7 @@ class AyahControlButtons extends StatelessWidget {
             size: 25,
           ),
         ),
+        //زر تشغيل الاية
         IconButton(
           onPressed: () => audioController.playAudio(
             ayah.audio!,
@@ -53,16 +59,25 @@ class AyahControlButtons extends StatelessWidget {
             size: 25,
           ),
         ),
+        //زر تحديد الاية
         BookmarkButton(
           ayah: ayah,
           surahController: surahController,
           bookMarkController: bookMarkController,
         ),
+        //زر تحديد الاية كآخر قراءة
         IconButton(
-          onPressed: () => surahController.setLastRead(
-            surahController.currentSurah.value,
-            ayah.number,
-          ),
+          onPressed: () {
+            lastReadController.updateLastRead(
+              surahController.currentSurah.value.name,
+              ayah.number,
+              surahController.currentSurah.value.id,
+            );
+            showCustomSnackbar(
+              title: 'تم',
+              message: 'تم تحديد الاية كآخر قراءة',
+            );
+          },
           icon: HugeIcon(
             icon: HugeIcons.strokeRoundedBookmarkAdd01,
             color: AppColor.primaryColor,

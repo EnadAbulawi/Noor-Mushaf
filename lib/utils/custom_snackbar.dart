@@ -11,7 +11,7 @@ void showCustomSnackbar({
   Color? backgroundColor, // لون الخلفية (اختياري)
   Gradient? backgroundGradient, // التدرج اللوني (اختياري)
   SnackPosition snackPosition = SnackPosition.BOTTOM,
-  Duration duration = const Duration(seconds: 2),
+  Duration duration = const Duration(seconds: 4),
   EdgeInsets margin = const EdgeInsets.all(16),
   Curve forwardAnimationCurve = Curves.easeOutQuad,
   Curve reverseAnimationCurve = Curves.fastLinearToSlowEaseIn,
@@ -40,13 +40,13 @@ void showCustomSnackbar({
       textAlign: TextAlign.end,
       style: AppFontStyle.alexandria.copyWith(
         fontWeight: FontWeight.bold,
-        fontSize: 16.sp,
+        fontSize: 14.sp,
       ),
     ),
     messageText: Text(
       message,
       textAlign: TextAlign.end,
-      style: AppFontStyle.alexandria.copyWith(fontSize: 14.sp),
+      style: AppFontStyle.alexandria.copyWith(fontSize: 16.sp),
     ),
     backgroundColor: finalBackgroundColor, // لون الخلفية (يمكن أن يكون null)
     snackPosition: snackPosition,

@@ -1,18 +1,15 @@
 import 'package:alfurqan/controllers/AudioController.dart';
 import 'package:alfurqan/controllers/bookmark_controller.dart';
+import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/models/aya_model.dart';
-import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:alfurqan/views/widgets/custom_suraDetail_appBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../controllers/surah_controller.dart';
 import '../widgets/aya_card_widgets.dart';
 import '../widgets/header_sura_detail_widget.dart';
 import 'package:alfurqan/views/widgets/audio_player_widget.dart';
-
 import 'widgets/show_aya_as_quran.dart'; // استدعاء ويدجت مشغل الصوت
 
 class SurahDetailView extends StatelessWidget {
@@ -20,6 +17,9 @@ class SurahDetailView extends StatelessWidget {
   final SettingsController settingsController = Get.find();
   final BookmarkController bookmarkController = Get.find();
   final AudioController audioController = Get.find();
+  final LastReadController lastReadController = Get.find();
+  final int? initialAyahNumber;
+  SurahDetailView({this.initialAyahNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -27,75 +27,71 @@ class SurahDetailView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // شريط العنوان المخصص
             CustomSuraDetailViewAppBar(
               audioController: audioController,
               surahController: surahController,
               settingsController: settingsController,
             ),
-
             Expanded(
               child: Obx(() {
                 if (surahController.isAyahLoading.value) {
                   return Center(child: CircularProgressIndicator());
-                } else {
-                  if (surahController.isRichTextMode.value) {
-                    // عرض الآيات مثل القران الكريم
-                    return ShowAyaAsQuran(
+                }
+
+                if (surahController.isRichTextMode.value) {
+                  return SingleChildScrollView(
+                    controller: surahController.scrollController,
+                    child: ShowAyaAsQuran(
                       surahController: surahController,
                       settingsController: settingsController,
-                    );
-                  } else {
-                    // عرض الآيات في شكل بطاقات
-                    return Column(
-                      children: [
-                        Obx(
-                          () => Visibility(
-                            replacement: const SizedBox(
-                              height: 0,
-                              child: Divider(
-                                color: Colors.white,
-                                thickness: 0.2,
-                                height: 5,
-                              ),
-                            ),
-                            visible: surahController.isHeaderVisible.value,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 12),
-                              child: HeaderSuraInformation(
-                                  surahController: surahController),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: surahController.scrollController,
-                            itemCount: surahController.ayahs.length,
-                            itemBuilder: (context, index) {
-                              Ayah ayah = surahController.ayahs[index];
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 12),
-                                child: AyaCardWidgets(
-                                  audioController: audioController,
-                                  bookMarkController: bookmarkController,
-                                  ayah: ayah,
-                                  settingsController: settingsController,
-                                  surahController: surahController,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    );
-                  }
+                    ),
+                  );
                 }
+
+                return Column(
+                  children: [
+                    Obx(() => Visibility(
+                          replacement: const SizedBox(
+                            height: 0,
+                            child: Divider(
+                              color: Colors.white,
+                              thickness: 0.2,
+                              height: 5,
+                            ),
+                          ),
+                          visible: surahController.isHeaderVisible.value,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 12),
+                            child: HeaderSuraInformation(
+                                surahController: surahController),
+                          ),
+                        )),
+                    Expanded(
+                      child: ListView.builder(
+                        controller: surahController.scrollController,
+                        itemCount: surahController.ayahs.length,
+                        itemBuilder: (context, index) {
+                          Ayah ayah = surahController.ayahs[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 12),
+                            child: AyaCardWidgets(
+                              audioController: audioController,
+                              bookMarkController: bookmarkController,
+                              ayah: ayah,
+                              settingsController: settingsController,
+                              surahController: surahController,
+                              lastReadController: lastReadController,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
               }),
             ),
-
-            // ✅ إضافة مشغل الصوت الثابت أسفل الشاشة
             AudioPlayerWidget(),
           ],
         ),

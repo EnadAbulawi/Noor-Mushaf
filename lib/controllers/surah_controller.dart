@@ -1,14 +1,11 @@
 import 'dart:developer';
-
 import 'package:alfurqan/models/aya_model.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-
 import '../models/surah_model.dart';
 import '../services/api_service.dart';
-import 'settings_controller.dart';
 
 class SurahController extends GetxController {
   var surahs = <Surah>[].obs;
@@ -65,13 +62,6 @@ class SurahController extends GetxController {
     super.onClose();
   }
 
-  void setLastRead(Surah surah, int ayahNumber) {
-    final settingsController = Get.find<SettingsController>();
-    settingsController.updateLastRead(surah.name, ayahNumber, surah.id);
-  }
-
-  /// ✅ **تحميل السور**
-
   void fetchSurahs() async {
     try {
       isLoading(true);
@@ -83,7 +73,7 @@ class SurahController extends GetxController {
   }
 
   /// ✅ **تحميل الآيات**
-  void fetchAyahs(int surahNumber) async {
+  Future fetchAyahs(int surahNumber) async {
     try {
       isAyahLoading(true);
 

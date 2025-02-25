@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:alfurqan/controllers/bookmark_controller.dart';
+import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/quran_player_controller.dart';
 import 'package:alfurqan/controllers/reader_selection_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
@@ -42,6 +43,7 @@ void main() async {
     Get.put(SurahController(), permanent: true);
     Get.put(AudioController(), permanent: true);
     Get.put(TafseerController(), permanent: true);
+    Get.put(LastReadController(prefs: prefs), permanent: true);
     Get.put(JuzController());
     Get.put(HizbController());
     Get.put(ReaderSelectionController());
