@@ -1,6 +1,6 @@
-# alfurqan
+# تطبيق مصحف نُور
 
-A new Flutter project.
+تطبيق قران كريم
 
 ## Getting Started
 
