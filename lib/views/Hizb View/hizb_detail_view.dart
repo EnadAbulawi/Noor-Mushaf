@@ -1,4 +1,6 @@
 import 'package:alfurqan/controllers/surah_controller.dart';
+import 'package:alfurqan/utils/app_font_style.dart';
+import 'package:alfurqan/widgets/custom_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,16 +15,18 @@ class HizbDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Obx(() =>
-      //       Text('الحزب ${controller.currentHizbQuarter.value?.number ?? ""}')),
-      //   centerTitle: true,
-      //   elevation: 0,
-      // ),
+      appBar: AppBar(
+        title: Obx(() => Text(
+              'الحزب ${controller.currentHizbQuarter.value?.number ?? ""}',
+              style: AppFontStyle.alexandria,
+            )),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CustomLoading());
           }
 
           if (controller.currentHizbQuarter.value == null) {

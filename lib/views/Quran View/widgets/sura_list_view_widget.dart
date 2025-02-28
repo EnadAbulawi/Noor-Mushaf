@@ -1,8 +1,11 @@
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
 import 'package:alfurqan/models/surah_model.dart';
+import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:alfurqan/views/widgets/list_of_sura_widget.dart';
+import 'package:alfurqan/widgets/custom_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SuraListViewWidget extends StatelessWidget {
@@ -22,7 +25,7 @@ class SuraListViewWidget extends StatelessWidget {
         Expanded(
           child: Obx(() {
             if (surahController.isLoading.value) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: CustomLoading());
             } else if (surahController.surahs.isEmpty) {
               return Center(child: Text("لم يتم العثور على سور"));
             } else {

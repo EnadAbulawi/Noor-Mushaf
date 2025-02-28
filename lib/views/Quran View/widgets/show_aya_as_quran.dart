@@ -1,13 +1,9 @@
-import 'package:alfurqan/controllers/AudioController.dart';
-import 'package:alfurqan/controllers/bookmark_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
-import 'package:alfurqan/models/aya_model.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 class ShowAyaAsQuran extends StatelessWidget {
   const ShowAyaAsQuran({
@@ -91,11 +87,11 @@ class ShowAyaAsQuran extends StatelessWidget {
                       ),
                       TextSpan(
                         text: ayah.text,
-                        style: AppFontStyle.newQuran.copyWith(
+                        style: AppFontStyle.kitab.copyWith(
                           fontSize: settingsController.fontSize.value,
-                          // height: 0.3.h,
-                          letterSpacing: 0.9.w,
-                          wordSpacing: 1.w,
+                          // // height: 0.3.h,
+                          letterSpacing: 0.5.w,
+                          wordSpacing: 0.5.w,
                         ),
                       ),
                     ],

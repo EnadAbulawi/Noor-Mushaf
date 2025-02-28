@@ -1,5 +1,6 @@
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
+import 'package:alfurqan/widgets/custom_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class HizbView extends StatelessWidget {
           Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
       body: Obx(() {
         if (controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: CustomLoading());
         }
         return GridView.builder(
           padding: EdgeInsets.all(16.r),

@@ -1,4 +1,4 @@
-import 'package:alfurqan/controllers/AudioController.dart';
+import 'package:alfurqan/controllers/audio_Controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
 import 'package:alfurqan/utils/app_font_style.dart';

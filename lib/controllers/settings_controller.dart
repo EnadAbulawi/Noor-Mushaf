@@ -92,6 +92,7 @@ class SettingsController extends GetxController {
     isDarkMode.value = value;
     prefs.setBool('isDarkMode', value);
     Get.changeThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+    Get.forceAppUpdate();
     // Get.forceAppUpdate();
   }
 

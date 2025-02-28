@@ -1,4 +1,4 @@
-import 'package:alfurqan/controllers/AudioController.dart';
+import 'package:alfurqan/controllers/audio_Controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
@@ -14,10 +14,11 @@ class AudioPlayerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (audioController.isPlaying.value) {
-      } else {
+      if (!audioController.isPlaying.value && !audioController.isPaused.value) {
         return SizedBox.shrink();
       }
+      final currentAyah = audioController.currentAyah.value;
+      if (currentAyah == null) return SizedBox.shrink();
 
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 16.0.h),

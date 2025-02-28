@@ -11,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'controllers/AudioController.dart';
+import 'controllers/audio_Controller.dart';
 import 'controllers/data_download_controller.dart';
 import 'controllers/hizb_controller.dart';
 import 'controllers/juz_controller.dart';

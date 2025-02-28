@@ -39,16 +39,16 @@ class ListOfSuraWidget extends StatelessWidget {
             SuraInformationWidget(surah: surah),
             Spacer(),
             Text(surah.name,
-                strutStyle: StrutStyle(
-                  forceStrutHeight: true,
-                  leading: 1.3.w,
-                ),
-                style: AppFontStyle.newQuran.copyWith(
+                // strutStyle: StrutStyle(
+                //   forceStrutHeight: true,
+                //   leading: 1.3.w,
+                // ),
+                style: AppFontStyle.uthmanicHafs.copyWith(
                   color: settingsController.isDarkMode.value
                       ? Colors.white
                       : AppColor.primaryColor,
                   fontSize: 25.sp,
-                  letterSpacing: 0.9.w,
+                  // letterSpacing: 0.9.w,
 
                   // height: 2,
                 )),
@@ -58,58 +58,3 @@ class ListOfSuraWidget extends StatelessWidget {
     );
   }
 }
-
-// class SuraNumberWidget extends StatelessWidget {
-//   const SuraNumberWidget({
-//     super.key,
-//     required this.surah,
-//   });
-
-//   final Surah surah;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: 45,
-//       height: 45,
-//       child: Stack(
-//         children: [
-//           Positioned(
-//             left: 0,
-//             top: 0,
-//             child: Container(
-//               width: 45,
-//               height: 45,
-//               clipBehavior: Clip.antiAlias,
-//               decoration: BoxDecoration(),
-//               child: Row(
-//                 mainAxisSize: MainAxisSize.min,
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 children: [
-//                   SvgPicture.asset(
-//                     'assets/numberbracket.svg',
-//                     width: 45,
-//                     height: 45,
-//                     color: AppColor.primaryColor,
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//           Positioned(
-//             left: surah.id < 10 ? 18 : 15,
-//             top: surah.id > 99 ? 13 : 13,
-//             child: Text(
-//               '${surah.id}',
-//               textAlign: TextAlign.center,
-//               style: AppFontStyle.balooBold.copyWith(
-//                 fontSize: 16,
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

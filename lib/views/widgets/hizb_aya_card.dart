@@ -1,4 +1,5 @@
-import 'package:alfurqan/controllers/AudioController.dart';
+import 'package:alfurqan/controllers/audio_Controller.dart';
+import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/models/aya_model.dart';
 import 'package:alfurqan/models/surah_model.dart';
 import 'package:alfurqan/utils/app_color.dart';
@@ -21,6 +22,7 @@ class HizbAyaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SettingsController settingsController = Get.find();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       padding: EdgeInsets.all(16.r),
@@ -69,7 +71,7 @@ class HizbAyaCard extends StatelessWidget {
           Text(
             ayah.text,
             style: AppFontStyle.kitab.copyWith(
-              fontSize: 25.sp,
+              fontSize: settingsController.fontSize.value,
               height: 1.8,
             ),
             textDirection: TextDirection.rtl,
