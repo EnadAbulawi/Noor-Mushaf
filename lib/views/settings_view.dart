@@ -63,22 +63,6 @@ class SettingsView extends StatelessWidget {
                   );
                 }
 
-                // if (tafseerController.error.value.isNotEmpty) {
-                //   // إضافة حالة الخطأ
-                //   return Center(
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Text(tafseerController.error.value),
-                //         ElevatedButton(
-                //           onPressed: tafseerController.fetchAvailableTafseers,
-                //           child: Text('إعادة المحاولة'),
-                //         ),
-                //       ],
-                //     ),
-                //   );
-                // }
-
                 return ListView.builder(
                   itemCount: tafseerController.availableTafseers.length,
                   itemBuilder: (context, index) {
@@ -122,7 +106,9 @@ class SettingsView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'الإعدادات',
-          style: AppFontStyle.balooBold.copyWith(fontSize: 20.sp),
+          style: AppFontStyle.alexandria.copyWith(
+            fontSize: 20.sp,
+          ),
         ),
         centerTitle: true,
       ),
@@ -130,7 +116,7 @@ class SettingsView extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(16.r),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               _buildSection(
                 'المظهر',
@@ -146,18 +132,18 @@ class SettingsView extends StatelessWidget {
                       padding: EdgeInsets.all(12.r),
                       child: Row(
                         children: [
-                          Icon(Icons.dark_mode, color: AppColor.primaryColor),
+                          Icon(Icons.dark_mode, color: AppColor.secondaryColor),
                           SizedBox(width: 12.w),
                           Text(
                             'الوضع الليلي',
-                            style: AppFontStyle.balooBold
+                            style: AppFontStyle.alexandria
                                 .copyWith(fontSize: 16.sp),
                           ),
                           Spacer(),
                           Obx(() => Switch(
                                 value: settingsController.isDarkMode.value,
                                 onChanged: settingsController.toggleDarkMode,
-                                activeColor: AppColor.primaryColor,
+                                activeColor: AppColor.secondaryColor,
                               )),
                         ],
                       ),
@@ -173,7 +159,7 @@ class SettingsView extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(16.r),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Row(
                             children: [
@@ -182,7 +168,7 @@ class SettingsView extends StatelessWidget {
                               SizedBox(width: 12.w),
                               Text(
                                 'حجم الخط',
-                                style: AppFontStyle.balooBold
+                                style: AppFontStyle.alexandria
                                     .copyWith(fontSize: 16.sp),
                               ),
                             ],
@@ -200,7 +186,7 @@ class SettingsView extends StatelessWidget {
                                   ),
                                   Text(
                                     'حجم الخط: ${settingsController.fontSize.value.toStringAsFixed(1)}',
-                                    style: AppFontStyle.balooBold
+                                    style: AppFontStyle.alexandria
                                         .copyWith(fontSize: 14.sp),
                                   ),
                                   SizedBox(height: 12.h),
@@ -215,7 +201,7 @@ class SettingsView extends StatelessWidget {
                                     ),
                                     child: Text(
                                       'صلي على رسول الله',
-                                      style: AppFontStyle.balooBold.copyWith(
+                                      style: AppFontStyle.alexandria.copyWith(
                                         fontSize:
                                             settingsController.fontSize.value,
                                       ),
@@ -271,7 +257,11 @@ class SettingsView extends StatelessWidget {
                             color: AppColor.primaryColor)
                         : Icon(Icons.download, color: AppColor.primaryColor),
                     onTap: () async {
-                      // Existing audio download logic
+                      if (dataLoadingController.isAudioDownloaded.value) {
+                        Get.snackbar("تنبيه", "تم تحميل الصوتيات بالفعل");
+                      } else {
+                        await dataLoadingController.downloadAllAudioFiles();
+                      }
                     },
                   ),
                 ],
@@ -293,45 +283,24 @@ class SettingsView extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
               Center(
-                child: ElevatedButton.icon(
+                child: ElevatedButton(
                   onPressed: settingsController.resetSettings,
-                  icon: Icon(Icons.restore),
-                  label: Text('إعادة تعيين الإعدادات'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade400,
+                    minimumSize: Size(double.infinity, 45),
                     padding:
                         EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
+                  child: Text(
+                    'إعادة تعيين الإعدادات',
+                    style:
+                        AppFontStyle.alexandria.copyWith(color: Colors.white),
+                  ),
                 ),
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     controller.fetchAvailableTafseers(); // جلب التفاسير
-              //   },
-              //   child: Text('تحميل التفاسير'),
-              // ),
-              // Obx(() {
-              //   if (controller.availableTafseers.isEmpty) {
-              //     return Center(child: CircularProgressIndicator());
-              //   }
-
-              //   return ListView.builder(
-              //     shrinkWrap: true,
-              //     itemCount: controller.availableTafseers.length,
-              //     itemBuilder: (context, index) {
-              //       final tafseer = controller.availableTafseers[index];
-              //       return ListTile(
-              //         title: Text(tafseer['name']),
-              //         onTap: () {
-              //           controller.setSelectedTafseer(tafseer['id'].toString());
-              //         },
-              //       );
-              //     },
-              //   );
-              // }),
             ],
           ),
         ),
@@ -341,13 +310,13 @@ class SettingsView extends StatelessWidget {
 
   Widget _buildSection(String title, List<Widget> children) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 16.r),
           child: Text(
             title,
-            style: AppFontStyle.balooBold.copyWith(
+            style: AppFontStyle.alexandria.copyWith(
               fontSize: 18.sp,
               color: AppColor.primaryColor,
             ),

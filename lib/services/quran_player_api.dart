@@ -32,11 +32,14 @@ class QuranPlayerApi {
     int retryCount = 3;
     while (retryCount > 0) {
       try {
-        final response = await _dio.get('reciters?language=ar');
+        final response = await _dio.get('reciters');
+        // log('API Response: ${response.data}'); //
         if (response.statusCode == 200) {
-          final reciters = List<Map<String, dynamic>>.from(response.data['reciters']);
-          reciters.sort((a, b) => (a['name'] as String).compareTo(b['name'] as String));
-          
+          final reciters =
+              List<Map<String, dynamic>>.from(response.data['reciters']);
+          reciters.sort(
+              (a, b) => (a['name'] as String).compareTo(b['name'] as String));
+
           return ApiResponse(
             data: reciters,
             status: ApiStatus.success,
@@ -44,7 +47,7 @@ class QuranPlayerApi {
           );
         }
       } on DioException catch (e) {
-        if (e.type == DioExceptionType.connectionTimeout || 
+        if (e.type == DioExceptionType.connectionTimeout ||
             e.type == DioExceptionType.receiveTimeout) {
           log('⏳ انتهت مهلة الاتصال بالخادم');
           return ApiResponse(
@@ -58,13 +61,13 @@ class QuranPlayerApi {
             message: 'يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى',
           );
         }
-        
+
         log('❌ خطأ في الخادم: $e');
         retryCount--;
         await Future.delayed(Duration(seconds: 5));
       }
     }
-    
+
     return ApiResponse(
       status: ApiStatus.serverError,
       message: 'عذراً، الخادم غير متاح حالياً. سيتم إصلاح المشكلة قريباً',
@@ -82,7 +85,7 @@ class QuranPlayerApi {
         );
       }
     } on DioException catch (e) {
-      if (e.type == DioExceptionType.connectionTimeout || 
+      if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout) {
         return ApiResponse(
           status: ApiStatus.timeout,
@@ -95,7 +98,7 @@ class QuranPlayerApi {
         );
       }
     }
-    
+
     return ApiResponse(
       status: ApiStatus.serverError,
       message: 'عذراً، الخادم غير متاح حالياً. سيتم إصلاح المشكلة قريباً',

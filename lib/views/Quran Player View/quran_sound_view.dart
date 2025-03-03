@@ -22,7 +22,6 @@ class QuranSoundView extends StatelessWidget {
         title: Text("صوتيات",
             style: AppFontStyle.alexandria.copyWith(fontSize: 16.sp)),
         centerTitle: true,
-        // backgroundColor: Colors.green[700], // ✅ تحسين الألوان
       ),
       body: Column(
         children: [
@@ -34,7 +33,15 @@ class QuranSoundView extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(12.sp),
                 decoration: BoxDecoration(
-                  color: Colors.green[100], // ✅ تحسين الألوان
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColor.primaryColor,
+                      AppColor.secondaryColor,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  // color: AppColor.primaryColor,
                   borderRadius: BorderRadius.circular(12.sp),
                 ),
                 child: Row(
@@ -46,17 +53,18 @@ class QuranSoundView extends StatelessWidget {
                       children: [
                         Text('قارئك المفضل',
                             style: AppFontStyle.alexandria.copyWith(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 14.sp,
                             )),
+                        SizedBox(height: 4.sp),
                         Obx(
                           () => Text(
                             readerController.selectedReaderName.value.isEmpty
                                 ? 'لم يتم اخيار قاريء بعد'
                                 : readerController.selectedReaderName.value,
                             style: AppFontStyle.alexandria.copyWith(
-                              color: Colors.black,
-                              fontSize: 16.sp,
+                              color: Colors.white,
+                              fontSize: 18.sp,
                             ),
                           ),
                         ),
@@ -65,7 +73,7 @@ class QuranSoundView extends StatelessWidget {
                     SizedBox(width: 12.sp),
                     HugeIcon(
                       icon: HugeIcons.strokeRoundedUserCircle,
-                      color: AppColor.darkColor,
+                      color: AppColor.lightColor,
                       size: 40.sp,
                     ),
                   ],
@@ -87,10 +95,10 @@ class QuranSoundView extends StatelessWidget {
             return GridView.builder(
                 padding: const EdgeInsets.all(12.0),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   crossAxisSpacing: 12.0,
-                  mainAxisSpacing: 12.0,
-                  childAspectRatio: 3 / 2,
+                  mainAxisSpacing: 2.0,
+                  childAspectRatio: 4 / 1,
                 ),
                 itemCount: readerController.surahs.length,
                 itemBuilder: (context, index) {
@@ -122,13 +130,31 @@ class QuranSoundView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12.sp),
                         ),
                         child: Center(
-                          child: Text(
-                            'سورة ${surah['name']}',
-                            textHeightBehavior: TextHeightBehavior(
-                              applyHeightToFirstAscent: false,
-                            ),
-                            style: AppFontStyle.newQuran.copyWith(
-                              fontSize: 25.sp,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: 16.sp,
+                                  backgroundColor: AppColor.primaryColor,
+                                  child: Text(
+                                    '${surah['id']}',
+                                    style: AppFontStyle.poppins.copyWith(
+                                      fontSize: 18.sp,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'سورة ${surah['name']}',
+                                  textHeightBehavior: TextHeightBehavior(
+                                    applyHeightToFirstAscent: false,
+                                  ),
+                                  style: AppFontStyle.kitab.copyWith(
+                                    fontSize: 25.sp,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
