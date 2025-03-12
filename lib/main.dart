@@ -1,11 +1,12 @@
 import 'dart:developer';
-
 import 'package:alfurqan/controllers/bookmark_controller.dart';
 import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/quran_player_controller.dart';
 import 'package:alfurqan/controllers/reader_selection_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
+import 'package:alfurqan/services/showcase_service.dart';
 import 'package:alfurqan/views/Hizb%20View/hizb_detail_view.dart';
+import 'package:alfurqan/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,11 +20,11 @@ import 'controllers/surah_controller.dart';
 import 'controllers/tafseer_controller.dart';
 import 'models/aya_model.dart';
 import 'services/life_cycle.dart';
-import 'views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Get.putAsync(() async => ShowcaseService()); // تهيئة ShowcaseService
   try {
     await Hive.initFlutter();
     Hive.registerAdapter(AyahAdapter());
@@ -81,7 +82,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -90,16 +93,14 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       minTextAdapt: true,
       builder: (context, child) {
-        Get.put(SurahController());
         return GetMaterialApp(
-          // initialBinding: AppBindings(), // ✅ استدعاء الـ Bindings هنا
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           themeMode: Get.find<SettingsController>().isDarkMode.value
               ? ThemeMode.dark
               : ThemeMode.light,
-          home: HomeView(),
+          home: SplashView(),
           getPages: [
             GetPage(
               name: '/hizb-detail',

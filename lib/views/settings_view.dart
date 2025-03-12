@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsView extends StatelessWidget {
   final SettingsController settingsController = Get.find();
@@ -103,7 +102,11 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
       appBar: AppBar(
+        backgroundColor:
+            Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
         title: Text(
           'الإعدادات',
           style: AppFontStyle.alexandria.copyWith(
@@ -237,7 +240,13 @@ class SettingsView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                      child: Text("إعادة التحميل"),
+                      child: Text(
+                        "إعادة التحميل",
+                        style: AppFontStyle.alexandria.copyWith(
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 14.sp,
+                        ),
+                      ),
                     ),
                   ),
 

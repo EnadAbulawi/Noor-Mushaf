@@ -18,7 +18,11 @@ class QuranSoundView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
       appBar: AppBar(
+        backgroundColor:
+            Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
         title: Text("صوتيات",
             style: AppFontStyle.alexandria.copyWith(fontSize: 16.sp)),
         centerTitle: true,

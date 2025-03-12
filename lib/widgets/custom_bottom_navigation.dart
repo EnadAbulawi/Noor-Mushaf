@@ -1,7 +1,9 @@
+import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
@@ -12,17 +14,22 @@ class CustomBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SettingsController settingsController = Get.find();
     return AnimatedContainer(
       height: 80.h,
       duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: settingsController.isDarkMode.value
+            ? AppColor.darkColor
+            : AppColor.lightColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: Offset(0, -5),
+            color: Get.isDarkMode
+                ? AppColor.lightColor.withOpacity(0.1)
+                : AppColor.darkColor.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(-5, 0),
           ),
         ],
       ),

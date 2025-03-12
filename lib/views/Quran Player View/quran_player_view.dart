@@ -3,6 +3,7 @@ import 'package:alfurqan/controllers/reader_selection_controller.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:alfurqan/utils/constant.dart';
+import 'package:alfurqan/utils/custom_snackbar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +24,8 @@ class QuranPlayerView extends StatelessWidget {
     final readerName = args["reader"];
     final surahNumber = args["surahNumber"];
     return Scaffold(
+      backgroundColor:
+          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
       // appBar: AppBar(
       //   title: Text("Player View"),
       // ),
@@ -33,7 +36,7 @@ class QuranPlayerView extends StatelessWidget {
           children: [
             Container(
               width: 300.w,
-              height: 300.h,
+              height: 350.h,
               margin: const EdgeInsets.symmetric(horizontal: 12.0),
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
@@ -49,17 +52,6 @@ class QuranPlayerView extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // CircleAvatar(
-                  //   radius: 60,
-                  //   backgroundColor: Colors.green[200],
-                  //   child: Icon(
-                  //     audioController.isPlaying.value
-                  //         ? Icons.graphic_eq_rounded
-                  //         : Icons.music_note_rounded,
-                  //     size: 50,
-                  //     color: Colors.green[800],
-                  //   ),
-                  // ),
                   SizedBox(height: 40.h),
                   Text("القاريء : $readerName ",
                       style: AppFontStyle.alexandria.copyWith(fontSize: 20.sp)),
@@ -67,10 +59,8 @@ class QuranPlayerView extends StatelessWidget {
                   Text("سورة $surahName ",
                       style: AppFontStyle.alexandria.copyWith(fontSize: 20.sp)),
                   Spacer(),
-
                   SvgPicture.asset('assets/Quran.svg',
-                      width: 200.w, height: 100.h),
-
+                      width: 200.w, height: 110.h),
                   SizedBox(height: 40.h),
                 ],
               ),
@@ -116,15 +106,19 @@ class QuranPlayerView extends StatelessWidget {
                 IconButton(
                   icon: HugeIcon(
                     icon: HugeIcons.strokeRoundedDownload04,
-                    color: Colors.white,
+                    color: Get.isDarkMode ? Colors.white : Colors.black,
                     size: 30,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showCustomSnackbar(
+                        title: 'تنبيه',
+                        message: "جاري العمل على تطوير ميزة التحميل");
+                  },
                 ),
                 IconButton(
                   icon: HugeIcon(
                     icon: HugeIcons.strokeRoundedGoBackward10Sec,
-                    color: Colors.white,
+                    color: Get.isDarkMode ? Colors.white : Colors.black,
                     size: 30,
                   ),
                   onPressed: () {
@@ -145,7 +139,7 @@ class QuranPlayerView extends StatelessWidget {
                               ? HugeIcons.strokeRoundedPause
                               : HugeIcons.strokeRoundedPlay,
                           size: 30,
-                          color: Colors.white,
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
                         ),
                         onPressed: () async {
                           if (!audioController.isPlaying.value) {
@@ -167,7 +161,7 @@ class QuranPlayerView extends StatelessWidget {
                 IconButton(
                   icon: HugeIcon(
                     icon: HugeIcons.strokeRoundedGoForward10Sec,
-                    color: Colors.white,
+                    color: Get.isDarkMode ? Colors.white : Colors.black,
                     size: 30,
                   ),
                   onPressed: () {
@@ -184,7 +178,9 @@ class QuranPlayerView extends StatelessWidget {
                                 .strokeRoundedRepeat, // أيقونة تشغيل التكرار
                         color: audioController.isRepeating.value
                             ? Colors.red // لون عند التكرار
-                            : AppColor.lightColor, // لون عادي
+                            : Get.isDarkMode
+                                ? Colors.white
+                                : Colors.black, // لون عادي
                         size: 30,
                       ),
                       onPressed: () {

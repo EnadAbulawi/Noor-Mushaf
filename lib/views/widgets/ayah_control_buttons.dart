@@ -8,7 +8,6 @@ import 'package:alfurqan/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-
 import '../Aya Share View/aya_image_view.dart';
 import 'bookmark_button.dart';
 
@@ -32,7 +31,7 @@ class AyahControlButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        //زر مشاركة الاية
+        // زر مشاركة الآية
         IconButton(
           onPressed: () => Get.to(() => AyahScreenshotScreen(
                 ayahText: ayah.text,
@@ -46,7 +45,7 @@ class AyahControlButtons extends StatelessWidget {
             size: 25,
           ),
         ),
-        //زر تشغيل الاية
+        // زر تشغيل الآية
         IconButton(
           onPressed: () => audioController.playAudio(
             ayah.audio!,
@@ -59,13 +58,13 @@ class AyahControlButtons extends StatelessWidget {
             size: 25,
           ),
         ),
-        //زر تحديد الاية
+        // زر تحديد الآية كعلامة
         BookmarkButton(
           ayah: ayah,
           surahController: surahController,
           bookMarkController: bookMarkController,
         ),
-        //زر تحديد الاية كآخر قراءة
+        // زر تحديد الآية كآخر قراءة
         IconButton(
           onPressed: () {
             lastReadController.updateLastRead(
@@ -75,7 +74,7 @@ class AyahControlButtons extends StatelessWidget {
             );
             showCustomSnackbar(
               title: 'تم',
-              message: 'تم تحديد الاية كآخر قراءة',
+              message: 'تم تحديد الآية كآخر قراءة',
             );
           },
           icon: HugeIcon(

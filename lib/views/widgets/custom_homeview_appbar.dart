@@ -10,29 +10,32 @@ class CustomHomeViewAppBar extends StatelessWidget {
   final SurahController surahController;
   final SettingsController settingsController;
 
-  const CustomHomeViewAppBar(
-      {super.key,
-      required this.surahController,
-      required this.settingsController});
+  const CustomHomeViewAppBar({
+    super.key,
+    required this.surahController,
+    required this.settingsController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         IconButton(
-            onPressed: () {
-              showSearch(
-                  context: context,
-                  delegate: SurahSearchDelegate(
-                    surahs: surahController.surahs,
-                  ));
-            },
-            icon: HugeIcon(
-              icon: HugeIcons.strokeRoundedSearch01,
-              color: settingsController.isDarkMode.value
-                  ? Colors.white
-                  : Colors.black,
-            )),
+          onPressed: () {
+            showSearch(
+              context: context,
+              delegate: SurahSearchDelegate(
+                surahs: surahController.surahs,
+              ),
+            );
+          },
+          icon: HugeIcon(
+            icon: HugeIcons.strokeRoundedSearch01,
+            color: settingsController.isDarkMode.value
+                ? Colors.white
+                : Colors.black,
+          ),
+        ),
         Spacer(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),

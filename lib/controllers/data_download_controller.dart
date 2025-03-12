@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
+import 'package:alfurqan/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
@@ -33,12 +34,12 @@ class DataDownloadController extends GetxController {
     });
     // checkAndLoadData(); // التحقق من البيانات عند بدء التطبيق
 
-    if (!isAudioDownloaded.value) {
-      Future.delayed(Duration(seconds: 2), () {
-        showAudioDownloadDialog(
-            this); // ✅ تمرير `DataDownloadController` كمعامل
-      });
-    }
+    // if (!isAudioDownloaded.value) {
+    //   Future.delayed(Duration(seconds: 2), () {
+    //     showAudioDownloadDialog(
+    //         this); // ✅ تمرير `DataDownloadController` كمعامل
+    //   });
+    // }
   }
 
   // void checkAudioCache() {
@@ -114,7 +115,8 @@ class DataDownloadController extends GetxController {
         progress.value = (i + 1) / totalSurahs;
       }
 
-      Get.snackbar('🎉 نجاح', 'تم تحميل جميع السور والآيات بنجاح.');
+      showCustomSnackbar(
+          title: '🎉 نجاح', message: 'تم تحميل جميع السور والآيات بنجاح.');
     } catch (e) {
       log("⚠️ خطأ أثناء تحميل البيانات: $e");
       Get.snackbar('⚠️ خطأ', 'تعذر تحميل البيانات.');
@@ -162,14 +164,11 @@ class DataDownloadController extends GetxController {
 
       isAudioDownloaded.value = true;
       prefs.remove('lastDownloadedSurah');
-      Get.snackbar(
-        '🎉 نجاح',
-        'تم تحميل جميع الملفات الصوتية.',
-        padding: EdgeInsets.all(16.0),
+      showCustomSnackbar(
+        title: '🎉 نجاح',
+        message: 'تم تحميل جميع الملفات الصوتية.',
         backgroundColor: Colors.green,
-        colorText: Colors.white,
         margin: EdgeInsets.all(16.0),
-        snackPosition: SnackPosition.BOTTOM,
       );
     } catch (e) {
       log("⚠️ خطأ أثناء تحميل الصوتيات: $e");

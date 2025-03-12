@@ -9,6 +9,8 @@ import 'Quran Player View/quran_sound_view.dart';
 import 'Quran View/quran_view.dart';
 
 class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
   @override
   State<HomeView> createState() => _HomeViewState();
 }

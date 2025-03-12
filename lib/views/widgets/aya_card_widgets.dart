@@ -39,7 +39,7 @@ class AyaCardWidgets extends StatelessWidget {
         child: Container(
       decoration: ShapeDecoration(
         color: settingsController.isDarkMode.value
-            ? Color(0xff040C23)
+            ? Color(0xff222831)
             : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -59,7 +59,7 @@ class AyaCardWidgets extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
             color: settingsController.isDarkMode.value
-                ? Color(0xff121931).withAlpha(100)
+                ? Color(0xff31363F).withAlpha(100)
                 : Color(0xff7B80AD).withOpacity(0.1),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -116,85 +116,97 @@ class TafseerWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: settingsController.isDarkMode.value
-            ? Color(0xff121931).withAlpha(100)
+            ? Color(0xff31363F).withAlpha(100)
             : Color(0xff7B80AD).withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Obx(() => Text(
-                          tafseerController.selectedTafseerName.value,
-                          style: AppFontStyle.alexandria.copyWith(
-                            fontSize: 14.sp,
+          InkWell(
+            onTap: () => settingsController.toggleTafseer(),
+            child: Container(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Obx(() => Text(
+                        tafseerController.selectedTafseerName.value,
+                        style: AppFontStyle.alexandria.copyWith(
+                          fontSize: 14.sp,
+                          color: AppColor.primaryColor,
+                        ),
+                      )),
+                  Row(
+                    children: [
+                      Text(
+                        'التفسير',
+                        style: AppFontStyle.alexandria.copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: settingsController.isDarkMode.value
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      Obx(() => Icon(
+                            settingsController.showTafseer.value
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
                             color: AppColor.primaryColor,
-                          ),
-                        )),
-                    Text(
-                      'التفسير',
-                      style: AppFontStyle.alexandria.copyWith(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: settingsController.isDarkMode.value
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
+                          )),
+                    ],
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.all(12),
-                child: Obx(() => FutureBuilder<String>(
-                      key: ValueKey(tafseerController.selectedTafseerId.value),
-                      future: tafseerController.getAyahTafseer(
-                        surahController.currentSurah.value.id,
-                        ayah.number,
-                      ),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: AppColor.primaryColor,
-                            ),
-                          );
-                        }
-                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                          return Text(
-                            snapshot.data!,
-                            style: AppFontStyle.alexandria.copyWith(
-                              fontSize: 16.sp,
-                              height: 1.8,
-                              color: settingsController.isDarkMode.value
-                                  ? Colors.white70
-                                  : Colors.black87,
-                            ),
-                            textAlign: TextAlign.justify,
-                            textDirection: TextDirection.rtl,
-                          );
-                        }
-                        return Center(
-                          child: Text(
-                            'جاري تحميل التفسير...',
-                            style: AppFontStyle.alexandria.copyWith(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        );
-                      },
-                    )),
-              ),
-            ],
+            ),
           ),
+          Obx(() => settingsController.showTafseer.value
+              ? Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Obx(() => FutureBuilder<String>(
+                        key:
+                            ValueKey(tafseerController.selectedTafseerId.value),
+                        future: tafseerController.getAyahTafseer(
+                          surahController.currentSurah.value.id,
+                          ayah.number,
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: AppColor.primaryColor,
+                              ),
+                            );
+                          }
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return Text(
+                              snapshot.data!,
+                              style: AppFontStyle.alexandria.copyWith(
+                                fontSize: 16.sp,
+                                height: 1.8,
+                                color: settingsController.isDarkMode.value
+                                    ? Colors.white70
+                                    : Colors.black87,
+                              ),
+                              textAlign: TextAlign.justify,
+                              textDirection: TextDirection.rtl,
+                            );
+                          }
+                          return Center(
+                            child: Text(
+                              'جاري تحميل التفسير...',
+                              style: AppFontStyle.alexandria.copyWith(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+                )
+              : const SizedBox.shrink())
         ],
       ),
     );

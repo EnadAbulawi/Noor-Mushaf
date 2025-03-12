@@ -9,7 +9,11 @@ class BookmarksView extends GetView<BookmarkController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
       appBar: AppBar(
+        backgroundColor:
+            Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
         title: Text('المحفوظات'),
       ),
       body: Column(

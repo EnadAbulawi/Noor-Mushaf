@@ -40,7 +40,7 @@ class SurahDetailView extends StatelessWidget {
 
                 if (surahController.isRichTextMode.value) {
                   return SingleChildScrollView(
-                    controller: surahController.scrollController,
+                    // controller: surahController.scrollController,
                     child: ShowAyaAsQuran(
                       surahController: surahController,
                       settingsController: settingsController,
@@ -50,23 +50,23 @@ class SurahDetailView extends StatelessWidget {
 
                 return Column(
                   children: [
-                    Obx(() => Visibility(
-                          replacement: const SizedBox(
-                            height: 0,
-                            child: Divider(
-                              color: Colors.white,
-                              thickness: 0.2,
-                              height: 5,
-                            ),
-                          ),
-                          visible: surahController.isHeaderVisible.value,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 12),
-                            child: HeaderSuraInformation(
-                                surahController: surahController),
-                          ),
-                        )),
+                    // Obx(() => Visibility(
+                    //       replacement: const SizedBox(
+                    //         height: 0,
+                    //         child: Divider(
+                    //           color: Colors.white,
+                    //           thickness: 0.2,
+                    //           height: 5,
+                    //         ),
+                    //       ),
+                    //       visible: surahController.isHeaderVisible.value,
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.symmetric(
+                    //             vertical: 5, horizontal: 12),
+                    //         child: HeaderSuraInformation(
+                    //             surahController: surahController),
+                    //       ),
+                    //     )),
                     Expanded(
                       child: ListView.builder(
                         controller: surahController.scrollController,

@@ -14,12 +14,21 @@ class Ayah {
 
   @HiveField(3)
   final String? audio;
+  @HiveField(4)
+  final String? page;
+  @HiveField(5)
+  final String? juz;
+  @HiveField(6)
+  final String? hizbQuarter;
 
   Ayah({
     required this.number,
     required this.text,
     required this.surahNumber,
     this.audio,
+    this.page,
+    this.juz,
+    this.hizbQuarter,
   });
 
   // تحويل إلى JSON
@@ -32,9 +41,12 @@ class Ayah {
 
   // إنشاء من JSON
   factory Ayah.fromJson(Map<String, dynamic> json) => Ayah(
-  number: json['number'] ?? json['numberInSurah'] ?? 0,
-  text: json['text'] ?? '',
-  surahNumber: json['surahNumber'] ?? json['surah']?['number'] ?? 0,
-  audio: json['audio'],
-);
+        number: json['number'] ?? json['numberInSurah'] ?? 0,
+        text: json['text'] ?? '',
+        surahNumber: json['surahNumber'] ?? json['surah']?['number'] ?? 0,
+        audio: json['audio'],
+        page: json['page'] ?? 0,
+        juz: json['juz'] ?? 0,
+        hizbQuarter: json['hizbQuarter'] ?? 0,
+      );
 }

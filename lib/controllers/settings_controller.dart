@@ -10,6 +10,8 @@ import 'tafseer_controller.dart';
 class SettingsController extends GetxController {
   var fontSize = 22.0.obs;
   var isDarkMode = false.obs;
+  // إضافة متغير للتحكم في عرض التفسير
+  final RxBool showTafseer = true.obs;
 
   //==========================================
   final selectedTafseerIdentifier = 'ar.muyassar'.obs;
@@ -34,6 +36,12 @@ class SettingsController extends GetxController {
     isDarkMode.value = prefs.getBool('isDarkMode') ?? false;
 
     // update(); // تحديث القيم فورًا عند تحميلها
+  }
+
+  // دالة للتبديل بين إظهار وإخفاء التفسير
+  void toggleTafseer() {
+    showTafseer.toggle();
+    update();
   }
 
   Future<void> loadAvailableTafseers() async {

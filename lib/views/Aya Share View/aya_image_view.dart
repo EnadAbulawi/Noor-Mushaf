@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:alfurqan/controllers/tafseer_controller.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
+import 'package:alfurqan/widgets/custom_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:screenshot/screenshot.dart';
@@ -36,7 +37,7 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
   final ScreenshotController _screenshotController = ScreenshotController();
   final TafseerController tafseerController = Get.find();
   final SettingsController settingsController = Get.find();
-  double _fontSize = 24.0;
+  double fontSize = 24.0;
   bool _isDarkBackground = false;
   bool _showTafseer = false; // إضافة متغير للتحكم في إظهار/إخفاء التفسير
 
@@ -46,13 +47,13 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
 
   void _increaseFontSize() {
     setState(() {
-      if (_fontSize < 40.0) _fontSize += 2.0;
+      if (fontSize < 40.0) fontSize += 2.0;
     });
   }
 
   void _decreaseFontSize() {
     setState(() {
-      if (_fontSize > 16.0) _fontSize -= 2.0;
+      if (fontSize > 16.0) fontSize -= 2.0;
     });
   }
 
@@ -132,8 +133,8 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                         child: Center(
                           child: Text(
                             widget.surahName,
-                            style: AppFontStyle.uthmanicHafs.copyWith(
-                              fontSize: 24.sp,
+                            style: AppFontStyle.kitab.copyWith(
+                              fontSize: 22.sp,
                               color: _isDarkBackground
                                   ? Colors.white
                                   : Colors.black,
@@ -152,11 +153,11 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                           textAlign: TextAlign.justify,
                           textDirection: TextDirection.rtl,
                           strutStyle: StrutStyle(
-                            fontSize: _fontSize,
+                            fontSize: fontSize,
                           ),
                           text: TextSpan(
                             style: AppFontStyle.kitab.copyWith(
-                              fontSize: _fontSize,
+                              fontSize: fontSize,
                               color: _isDarkBackground
                                   ? Colors.white
                                   : Colors.black,
@@ -165,7 +166,7 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                               TextSpan(
                                   text: widget.ayahText,
                                   style: AppFontStyle.kitab.copyWith(
-                                    fontSize: _fontSize,
+                                    fontSize: fontSize,
                                     height: 1.5.h,
                                   )),
                               WidgetSpan(
@@ -180,8 +181,8 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                                       child: SvgPicture.asset(
                                         'assets/numberbracket.svg',
                                         color: Color(0xff4477CE),
-                                        width: _fontSize <= 26 ? 25 : 35,
-                                        height: _fontSize <= 26 ? 25 : 35,
+                                        width: fontSize <= 26 ? 25 : 35,
+                                        height: fontSize <= 26 ? 25 : 35,
                                       ),
                                     ),
                                     Text(
@@ -200,36 +201,29 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 12.h,
+                      ),
                       // إضافة التفسير
                       if (_showTafseer) ...[
                         Divider(
                           color: _isDarkBackground
                               ? Colors.white54
                               : Colors.black54,
-                          height: 32.h,
+                          height: 8.h,
                           thickness: 0.2,
                         ),
                         TafseerWidget(
                           isDarkBackground: _isDarkBackground,
                           tafseerController: tafseerController,
                           widget: widget,
+                          fontSize: fontSize,
                         ),
                       ],
 
-                      SizedBox(height: 40.h),
+                      SizedBox(height: 20.h),
                       // اسم التطبيق
                       AppName(isDarkBackground: _isDarkBackground),
-                      // SizedBox(height: 12.h),
-                      // عرض قيمة حجم الخط
-                      // Text(
-                      //   'حجم الخط: ${_fontSize.toStringAsFixed(1)}',
-                      //   style: AppFontStyle.alexandria.copyWith(
-                      //     fontSize: 12.sp,
-                      //     color:
-                      //         _isDarkBackground ? Colors.white : Colors.black,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // )
                     ],
                   ),
                 ),
@@ -297,9 +291,9 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                               FloatingActionButton(
                                 heroTag: 'decrease',
                                 onPressed: () {
-                                  if (_fontSize > 16.0) {
+                                  if (fontSize > 16.0) {
                                     setModalState(() {
-                                      _fontSize -= 2.0;
+                                      fontSize -= 2.0;
                                     });
                                     setState(() {});
                                   }
@@ -307,16 +301,16 @@ class _AyahScreenshotScreenState extends State<AyahScreenshotScreen> {
                                 child: Icon(HugeIcons.strokeRoundedRemove01),
                               ),
                               Text(
-                                'حجم الخط: ${_fontSize.toStringAsFixed(0)}',
+                                'حجم الخط: ${fontSize.toStringAsFixed(0)}',
                                 style: AppFontStyle.alexandria
                                     .copyWith(fontSize: 12.sp),
                               ),
                               FloatingActionButton(
                                 heroTag: 'increase',
                                 onPressed: () {
-                                  if (_fontSize < 40.0) {
+                                  if (fontSize < 40.0) {
                                     setModalState(() {
-                                      _fontSize += 2.0;
+                                      fontSize += 2.0;
                                     });
                                     setState(() {});
                                   }
@@ -357,34 +351,35 @@ class TafseerWidget extends StatelessWidget {
     required bool isDarkBackground,
     required this.tafseerController,
     required this.widget,
+    required this.fontSize,
   }) : _isDarkBackground = isDarkBackground;
 
   final bool _isDarkBackground;
   final TafseerController tafseerController;
   final AyahScreenshotScreen widget;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: _isDarkBackground
-            ? Color(0xff121931).withAlpha(100)
-            : Color(0xff7B80AD).withOpacity(0.1),
+        color: _isDarkBackground ? AppColor.darkColor : Colors.white,
+        // color: _isDarkBackground ? AppColor.darkColor : Colors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.all(8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Obx(() => Text(
                       Get.find<TafseerController>().selectedTafseerName.value,
                       style: AppFontStyle.alexandria.copyWith(
-                        fontSize: 14.sp,
+                        fontSize: 18.sp,
                         color: AppColor.primaryColor,
                       ),
                     )),
@@ -400,7 +395,7 @@ class TafseerWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(12),
+            padding: EdgeInsets.all(8),
             child: Obx(() => FutureBuilder<String>(
                   key: ValueKey(
                       Get.find<TafseerController>().selectedTafseerId.value),
@@ -411,17 +406,15 @@ class TafseerWidget extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: CircularProgressIndicator(
-                          color: AppColor.primaryColor,
-                        ),
+                        child: CustomLoading(),
                       );
                     }
                     if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return Text(
                         snapshot.data!,
                         style: AppFontStyle.alexandria.copyWith(
-                          fontSize: 16.sp,
-                          height: 1.8,
+                          fontSize: fontSize <= 26 ? 18.sp : 22.sp,
+                          // height: 1.8,
                           color: _isDarkBackground
                               ? Colors.white70
                               : Colors.black87,
