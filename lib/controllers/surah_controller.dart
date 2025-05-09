@@ -19,6 +19,8 @@ class SurahController extends GetxController {
   final Box ayaBox = Hive.box('quranCache');
   final AudioPlayer _audioPlayer = AudioPlayer();
   final ScrollController scrollController = ScrollController();
+  var currentPage = 0.obs;
+  var pages = <int, List<Ayah>>{}.obs;
   // final AudioController audioController = Get.find();
 
   var currentSurah = Surah(
@@ -39,6 +41,16 @@ class SurahController extends GetxController {
     fetchSurahs();
     scrollController.addListener(_scrollListener);
     super.onInit();
+  }
+
+  void groupAyahsByPage() {
+    pages.clear();
+    for (var ayah in ayahs) {
+      if (!pages.containsKey(ayah.page)) {
+        pages[ayah.page] = [];
+      }
+      pages[ayah.page]!.add(ayah);
+    }
   }
 
   void refreshAyahs() {
@@ -102,6 +114,15 @@ class SurahController extends GetxController {
         );
 
         ayahs.assignAll(ayahsList);
+        groupAyahsByPage(); // <-- أضف هذا السطر
+      }
+      // كود الاختبار هنا
+      if (ayahs.isNotEmpty) {
+        log('Page: ${ayahs[0].page}'); // يجب أن تطبع 1
+        log('Juz: ${ayahs[0].juz}'); // يجب أن تطبع 1
+        log('Hizb: ${ayahs[0].hizbQuarter}'); // يجب أن تطبع 1
+      } else {
+        log('No ayahs found!');
       }
     } catch (e) {
       log("Error fetching ayahs: $e");

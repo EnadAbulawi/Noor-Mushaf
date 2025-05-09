@@ -60,7 +60,7 @@ class BookmarkButton extends StatelessWidget {
   }
 
   void _showBookmarkDialog(BookmarkModel bookmark) {
-    final categories = ['للقراءة', 'للحفظ', 'للمراجعة', 'مفضلة'];
+    final categories = ['للقراءة', 'للحفظ', 'للمراجعة', 'للتدبر', 'مفضلة'];
 
     Get.defaultDialog(
       title: 'إضافة إلى المحفوظات',

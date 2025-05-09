@@ -53,15 +53,21 @@ class CustomBottomNavigation extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              HugeIcons.strokeRoundedBookmark01,
-            ),
-            label: 'المحفوظات',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               HugeIcons.strokeRoundedHeadphones,
             ),
             label: 'الصوتيات',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              HugeIcons.strokeRoundedPrayerRug02,
+            ),
+            label: 'أوقات الصلاة',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              HugeIcons.strokeRoundedBookmark01,
+            ),
+            label: 'المحفوظات',
           ),
           BottomNavigationBarItem(
             icon: Icon(

@@ -9,6 +9,8 @@ void showCustomSnackbar({
   required String title,
   required String message,
   Color? backgroundColor, // لون الخلفية (اختياري)
+  Color? textColor, // لون النص (اختياري)
+  Color? messageColor,
   Gradient? backgroundGradient, // التدرج اللوني (اختياري)
   SnackPosition snackPosition = SnackPosition.BOTTOM,
   Duration duration = const Duration(seconds: 4),
@@ -41,12 +43,16 @@ void showCustomSnackbar({
       style: AppFontStyle.alexandria.copyWith(
         fontWeight: FontWeight.bold,
         fontSize: 14.sp,
+        color: textColor ?? AppColor.lightColor,
       ),
     ),
     messageText: Text(
       message,
       textAlign: TextAlign.end,
-      style: AppFontStyle.alexandria.copyWith(fontSize: 16.sp),
+      style: AppFontStyle.alexandria.copyWith(
+        fontSize: 16.sp,
+        color: messageColor ?? AppColor.lightColor,
+      ),
     ),
     backgroundColor: finalBackgroundColor, // لون الخلفية (يمكن أن يكون null)
     snackPosition: snackPosition,

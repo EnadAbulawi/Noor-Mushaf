@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:alfurqan/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -200,8 +199,9 @@ class DataDownloadController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     bool neverAskAgain = prefs.getBool('neverAskAudioDownload') ?? false;
 
-    if (neverAskAgain)
+    if (neverAskAgain) {
       return; // ✅ لا تظهر النافذة مرة أخرى إذا اختار المستخدم "عدم الإزعاج"
+    }
 
     Get.bottomSheet(
       Container(

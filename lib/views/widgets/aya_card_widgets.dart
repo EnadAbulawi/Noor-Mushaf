@@ -4,6 +4,7 @@ import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
 import 'package:alfurqan/controllers/tafseer_controller.dart';
+import 'package:alfurqan/features/customCard.dart';
 import 'package:alfurqan/models/aya_model.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
@@ -35,14 +36,14 @@ class AyaCardWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     final tafseerController = Get.find<TafseerController>();
 
-    return Card(
+    return CustomCard(
         child: Container(
       decoration: ShapeDecoration(
         color: settingsController.isDarkMode.value
             ? Color(0xff222831)
             : Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
         ),
         shadows: [
           BoxShadow(
@@ -56,11 +57,11 @@ class AyaCardWidgets extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Container(
           width: double.infinity,
-          height: 50,
+          height: 50.h,
           decoration: BoxDecoration(
             color: settingsController.isDarkMode.value
                 ? Color(0xff31363F).withAlpha(100)
-                : Color(0xff7B80AD).withOpacity(0.1),
+                : Color(0xff7B80AD).withAlpha(30),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(

@@ -3,7 +3,9 @@ import 'package:alfurqan/controllers/bookmark_controller.dart';
 import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/models/aya_model.dart';
+import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/views/widgets/custom_suraDetail_appBar.dart';
+import 'package:alfurqan/widgets/custom_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/surah_controller.dart';
@@ -24,6 +26,7 @@ class SurahDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Get.isDarkMode ? AppColor.darkColor : AppColor.dayColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -35,16 +38,13 @@ class SurahDetailView extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (surahController.isAyahLoading.value) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: CustomLoading());
                 }
 
                 if (surahController.isRichTextMode.value) {
-                  return SingleChildScrollView(
-                    // controller: surahController.scrollController,
-                    child: ShowAyaAsQuran(
-                      surahController: surahController,
-                      settingsController: settingsController,
-                    ),
+                  return ShowAyaAsQuran(
+                    surahController: surahController,
+                    settingsController: settingsController,
                   );
                 }
 

@@ -28,7 +28,7 @@ class _QuranMainViewState extends State<QuranMainView>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 1);
   }
 
   @override
@@ -76,7 +76,7 @@ class _QuranMainViewState extends State<QuranMainView>
                     surahController: surahController,
                     settingsController: settingsController),
                 JuzListView(),
-                HizbView(),
+                // HizbView(),
               ].reversed.toList(),
             ),
           ),

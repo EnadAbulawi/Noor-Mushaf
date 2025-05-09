@@ -4,13 +4,15 @@ import 'package:alfurqan/controllers/last_read_controller.dart';
 import 'package:alfurqan/controllers/quran_player_controller.dart';
 import 'package:alfurqan/controllers/reader_selection_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
-import 'package:alfurqan/services/showcase_service.dart';
+import 'package:alfurqan/services/notification_service.dart';
+
 import 'package:alfurqan/views/Hizb%20View/hizb_detail_view.dart';
 import 'package:alfurqan/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/audio_Controller.dart';
 import 'controllers/data_download_controller.dart';
@@ -23,8 +25,9 @@ import 'services/life_cycle.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('ar'); // تهيئة بيانات التواريخ للغة العربية
+  await NotificationService.initialize(); // تهيئة الإشعارات
 
-  await Get.putAsync(() async => ShowcaseService()); // تهيئة ShowcaseService
   try {
     await Hive.initFlutter();
     Hive.registerAdapter(AyahAdapter());

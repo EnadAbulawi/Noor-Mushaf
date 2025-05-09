@@ -1,7 +1,7 @@
 import 'package:alfurqan/controllers/audio_Controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/surah_controller.dart';
-import 'package:alfurqan/services/showcase_service.dart';
+
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:alfurqan/views/BookMark%20View/bookmark_view.dart';
 import 'package:alfurqan/views/settings_view.dart';
@@ -22,8 +22,6 @@ class CustomSuraDetailViewAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showcaseService = Get.find<ShowcaseService>();
-
     // // بدء العرض التوضيحي بعد تأخير 3 ثوانٍ
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
     //   //  await showcaseService.isShowcaseShown('search');

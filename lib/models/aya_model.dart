@@ -14,21 +14,24 @@ class Ayah {
 
   @HiveField(3)
   final String? audio;
-  @HiveField(4)
-  final String? page;
-  @HiveField(5)
-  final String? juz;
-  @HiveField(6)
-  final String? hizbQuarter;
+
+  @HiveField(4) // جديد
+  final int page;
+
+  @HiveField(5) // جديد
+  final int juz;
+
+  @HiveField(6) // جديد
+  final int hizbQuarter;
 
   Ayah({
     required this.number,
     required this.text,
     required this.surahNumber,
     this.audio,
-    this.page,
-    this.juz,
-    this.hizbQuarter,
+    required this.page, // جديد
+    required this.juz, // جديد
+    required this.hizbQuarter, // جديد
   });
 
   // تحويل إلى JSON
@@ -37,6 +40,9 @@ class Ayah {
         'text': text,
         'surahNumber': surahNumber,
         'audio': audio,
+        'page': page,
+        'juz': juz,
+        'hizb': hizbQuarter,
       };
 
   // إنشاء من JSON
@@ -47,6 +53,6 @@ class Ayah {
         audio: json['audio'],
         page: json['page'] ?? 0,
         juz: json['juz'] ?? 0,
-        hizbQuarter: json['hizbQuarter'] ?? 0,
+        hizbQuarter: json['hizb'] ?? json['hizbQuarter'] ?? 0,
       );
 }

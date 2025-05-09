@@ -1,6 +1,7 @@
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/views/BookMark%20View/bookmark_view.dart';
+import 'package:alfurqan/views/salahTime%20View/salah_time_home.dart';
 import 'package:alfurqan/views/settings_view.dart';
 import 'package:alfurqan/widgets/custom_bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,14 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final SettingsController settingsController = Get.find();
-  final RxInt _currentIndex = 3.obs;
+  final RxInt _currentIndex = 4.obs;
 
   // تحديث قائمة الصفحات
   final List<Widget> _pages = [
     SettingsView(),
-    QuranSoundView(),
     BookmarksView(),
+    SalahTimeHome(),
+    QuranSoundView(),
     QuranMainView(), // الصفحة الرئيسية
   ];
 

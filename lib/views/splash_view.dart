@@ -1,5 +1,6 @@
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
+import 'package:alfurqan/utils/onboarding_check.dart';
 import 'package:alfurqan/views/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,7 +51,7 @@ class _SplashViewState extends State<SplashView>
 
     _controller.forward();
 
-    navigateToOnBoadringView();
+    _checkNavigation();
   }
 
   dispose() {
@@ -58,13 +59,15 @@ class _SplashViewState extends State<SplashView>
     super.dispose();
   }
 
-  navigateToOnBoadringView() async {
-    final prefs = await SharedPreferences.getInstance();
-    final bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-
-    Future.delayed(const Duration(seconds: 5), () {
-      Get.off(() => isFirstLaunch ? OnboardingScreen() : HomeView());
-    });
+  _checkNavigation() async {
+    await Future.delayed(Duration(seconds: 5));
+    final bool onboardingCompleted =
+        await OnboardingCheck.isOnboardingCompleted();
+    if (onboardingCompleted) {
+      Get.off(() => HomeView());
+    } else {
+      Get.off(() => OnboardingScreen());
+    }
   }
 
   @override
@@ -82,26 +85,27 @@ class _SplashViewState extends State<SplashView>
               height: 300,
             ),
           ),
+          SizedBox(height: 20.h),
           SlideTransition(
             position: _text1Animation,
             child: Text(
               'مصحف نُــور',
-              style: AppFontStyle.newQuran.copyWith(
-                fontSize: 35.sp,
+              style: AppFontStyle.alexandria.copyWith(
+                fontSize: 22.sp,
                 color: AppColor.lightColor,
               ),
             ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 12.h),
           SlideTransition(
             position: _text2Animation,
             child: Text(
               '﴾ قَدْ جَاءَكُم مِّنَ اللَّهِ نُورٌ وَكِتَابٌ مُّبِينٌ ﴿',
-              style: AppFontStyle.newQuran.copyWith(
-                fontSize: 35.sp,
-                wordSpacing: 1.5,
+              style: AppFontStyle.alexandria.copyWith(
+                fontSize: 20.sp,
+                // wordSpacing: 1.5,
                 color: AppColor.lightColor,
-                letterSpacing: 0.5,
+                // letterSpacing: 0.5,
               ),
             ),
           ),

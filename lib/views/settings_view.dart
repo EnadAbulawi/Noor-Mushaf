@@ -1,6 +1,7 @@
 import 'package:alfurqan/controllers/data_download_controller.dart';
 import 'package:alfurqan/controllers/settings_controller.dart';
 import 'package:alfurqan/controllers/tafseer_controller.dart';
+import 'package:alfurqan/features/customCard.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,79 @@ class SettingsView extends StatelessWidget {
   final SettingsController settingsController = Get.find();
   final DataDownloadController dataLoadingController = Get.find();
   final TafseerController controller = Get.put(TafseerController());
+
+  // دالة عرض قائمة طرق الحساب
+  Future<void> _showCalculationMethodSelector(BuildContext context) async {
+    final SettingsController settingsController = Get.find();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        height: Get.height * 0.6,
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.access_time, size: 24.sp),
+                    SizedBox(width: 8.w),
+                    Text(
+                      'طريقة حساب الأوقات',
+                      style: AppFontStyle.alexandria.copyWith(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(Icons.info),
+                  onPressed: () => Get.dialog(
+                    AlertDialog(
+                      title: Text("معلومات الطرق"),
+                      content: Text("اختر الطريقة المناسبة لمنطقتك الجغرافية"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Divider(height: 24.h),
+            Expanded(
+              child: ListView.builder(
+                itemCount: settingsController.calculationMethods.length,
+                itemBuilder: (context, index) {
+                  final entry = settingsController.calculationMethods.entries
+                      .elementAt(index);
+                  return Card(
+                    elevation: 0,
+                    margin: EdgeInsets.symmetric(vertical: 4.h),
+                    child: ListTile(
+                      title: Text(entry.value),
+                      trailing: Obx(() => Radio<int>(
+                            value: entry.key,
+                            groupValue:
+                                settingsController.calculationMethod.value,
+                            onChanged: (value) {
+                              settingsController
+                                  .updateCalculationMethod(value!);
+                              Get.back();
+                            },
+                          )),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
 // دالة عرض قائمة التفاسير
   Future<void> _showTafseerSelector(BuildContext context) async {
@@ -102,11 +176,10 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
+      backgroundColor: Get.isDarkMode ? AppColor.darkColor : AppColor.dayColor,
       appBar: AppBar(
         backgroundColor:
-            Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
+            Get.isDarkMode ? AppColor.darkColor : AppColor.dayColor,
         title: Text(
           'الإعدادات',
           style: AppFontStyle.alexandria.copyWith(
@@ -125,12 +198,7 @@ class SettingsView extends StatelessWidget {
                 'المظهر',
                 [
                   // Dark Mode Card
-                  Card(
-                    elevation: 2,
-                    margin: EdgeInsets.only(bottom: 12.r),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
+                  CustomCard(
                     child: Padding(
                       padding: EdgeInsets.all(12.r),
                       child: Row(
@@ -154,11 +222,7 @@ class SettingsView extends StatelessWidget {
                   ),
 
                   // Font Size Card
-                  Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
+                  CustomCard(
                     child: Padding(
                       padding: EdgeInsets.all(16.r),
                       child: Column(
@@ -181,7 +245,6 @@ class SettingsView extends StatelessWidget {
                                 children: [
                                   Slider(
                                     value: settingsController.fontSize.value,
-                                    min: 16.0.sp,
                                     max: 40.0.sp,
                                     activeColor: AppColor.primaryColor,
                                     onChanged:
@@ -290,6 +353,23 @@ class SettingsView extends StatelessWidget {
                   ),
                 ],
               ),
+              // SizedBox(height: 20.h),
+              _buildSection(
+                'أوقات الصلاة',
+                [
+                  _buildSettingCard(
+                    icon: Icons.mosque,
+                    title: 'طريقة الحساب',
+                    subtitle: Obx(() => Text(
+                          settingsController.calculationMethods[
+                              settingsController.calculationMethod.value]!,
+                          style: AppFontStyle.alexandria
+                              .copyWith(color: Colors.grey),
+                        )),
+                    onTap: () => _showCalculationMethodSelector(context),
+                  ),
+                ],
+              ),
               SizedBox(height: 20.h),
               Center(
                 child: ElevatedButton(
@@ -344,12 +424,7 @@ class SettingsView extends StatelessWidget {
     Widget? trailing,
     VoidCallback? onTap,
   }) {
-    return Card(
-      elevation: 2,
-      margin: EdgeInsets.only(bottom: 12.r),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.r),
-      ),
+    return CustomCard(
       child: ListTile(
         contentPadding: EdgeInsets.all(12.r),
         leading: Icon(icon, color: AppColor.primaryColor),

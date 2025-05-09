@@ -14,7 +14,7 @@ class BookmarksView extends GetView<BookmarkController> {
       appBar: AppBar(
         backgroundColor:
             Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
-        title: Text('المحفوظات'),
+        title: Text('المحفوظات', style: AppFontStyle.alexandria),
       ),
       body: Column(
         children: [
@@ -34,7 +34,9 @@ class BookmarksView extends GetView<BookmarkController> {
                     padding: EdgeInsets.only(right: 8.w),
                     child: FilterChip(
                       selected: isSelected,
-                      label: Text(category),
+                      label: Text(category,
+                          style: AppFontStyle.alexandria
+                              .copyWith(fontSize: 14.sp)),
                       onSelected: (selected) {
                         controller.selectedCategory.value = category;
                       },
@@ -80,22 +82,27 @@ class BookmarksView extends GetView<BookmarkController> {
                       child: InkWell(
                         onTap: () {
                           // Navigate to ayah
+                          controller.navigateToAyah(
+                            bookmark,
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.all(16.r),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    bookmark.surahName,
-                                    style: AppFontStyle.alexandria.copyWith(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.bold,
+                                  Chip(
+                                    label: Text(
+                                      bookmark.category,
+                                      style: AppFontStyle.alexandria
+                                          .copyWith(fontSize: 12.sp),
                                     ),
+                                    backgroundColor:
+                                        AppColor.primaryColor.withOpacity(0.1),
                                   ),
-                                  SizedBox(width: 8.w),
+                                  Spacer(),
                                   Text(
                                     'آية ${bookmark.ayahNumber}',
                                     style: AppFontStyle.alexandria.copyWith(
@@ -103,24 +110,31 @@ class BookmarksView extends GetView<BookmarkController> {
                                       color: AppColor.primaryColor,
                                     ),
                                   ),
-                                  Spacer(),
-                                  Chip(
-                                    label: Text(
-                                      bookmark.category,
-                                      style: TextStyle(fontSize: 12.sp),
+                                  SizedBox(width: 8.w),
+                                  Text(
+                                    bookmark.surahName,
+                                    style: AppFontStyle.kitab.copyWith(
+                                      fontSize: 25.sp,
                                     ),
-                                    backgroundColor:
-                                        AppColor.primaryColor.withOpacity(0.1),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 12.h),
-                              Text(
-                                bookmark.ayahText,
-                                style: AppFontStyle.kitab.copyWith(
-                                  fontSize: 18.sp,
+                              SizedBox(height: 8.h),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w, vertical: 16.h),
+                                alignment: Alignment.centerRight,
+                                decoration: BoxDecoration(
+                                  color: AppColor.primaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(15.r),
                                 ),
-                                textDirection: TextDirection.rtl,
+                                child: Text(
+                                  bookmark.ayahText,
+                                  style: AppFontStyle.kitab.copyWith(
+                                    fontSize: 23.sp,
+                                  ),
+                                  textDirection: TextDirection.rtl,
+                                ),
                               ),
                             ],
                           ),

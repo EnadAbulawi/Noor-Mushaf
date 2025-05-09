@@ -1,3 +1,4 @@
+import 'package:alfurqan/features/customCard.dart';
 import 'package:alfurqan/utils/app_color.dart';
 import 'package:alfurqan/utils/app_font_style.dart';
 import 'package:alfurqan/widgets/custom_loading.dart';
@@ -18,11 +19,10 @@ class QuranSoundView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
+      backgroundColor: Get.isDarkMode ? AppColor.darkColor : AppColor.dayColor,
       appBar: AppBar(
         backgroundColor:
-            Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
+            Get.isDarkMode ? AppColor.darkColor : AppColor.dayColor,
         title: Text("صوتيات",
             style: AppFontStyle.alexandria.copyWith(fontSize: 16.sp)),
         centerTitle: true,
@@ -108,58 +108,52 @@ class QuranSoundView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final surah = readerController.surahs[index];
                   return InkWell(
-                    onTap: () {},
-                    child: InkWell(
-                      onTap: () {
-                        if (readerController.selectedReader.value.isNotEmpty) {
-                          int surahNumber = surah['id'];
-                          Get.to(() => QuranPlayerView(), arguments: {
-                            'surahNumber': surahNumber,
-                            'surahName': surah['name'],
-                            'reader': readerController.selectedReaderName.value
-                          });
-                        } else {
-                          Get.snackbar(
-                            "⚠️ تنبيه",
-                            "يرجى اختيار القارئ أولًا",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                          );
-                        }
-                      },
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.sp),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CircleAvatar(
-                                  radius: 16.sp,
-                                  backgroundColor: AppColor.primaryColor,
-                                  child: Text(
-                                    '${surah['id']}',
-                                    style: AppFontStyle.poppins.copyWith(
-                                      fontSize: 18.sp,
-                                    ),
+                    onTap: () {
+                      if (readerController.selectedReader.value.isNotEmpty) {
+                        int surahNumber = surah['id'];
+                        Get.to(() => QuranPlayerView(), arguments: {
+                          'surahNumber': surahNumber,
+                          'surahName': surah['name'],
+                          'reader': readerController.selectedReaderName.value
+                        });
+                      } else {
+                        Get.snackbar(
+                          "⚠️ تنبيه",
+                          "يرجى اختيار القارئ أولًا",
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                        );
+                      }
+                    },
+                    child: CustomCard(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CircleAvatar(
+                                radius: 16.sp,
+                                backgroundColor: AppColor.secondaryColor,
+                                child: Text(
+                                  '${surah['id']}',
+                                  style: AppFontStyle.poppins.copyWith(
+                                    fontSize: 18.sp,
+                                    color: Colors.white,
                                   ),
                                 ),
-                                Text(
-                                  'سورة ${surah['name']}',
-                                  textHeightBehavior: TextHeightBehavior(
-                                    applyHeightToFirstAscent: false,
-                                  ),
-                                  style: AppFontStyle.kitab.copyWith(
-                                    fontSize: 25.sp,
-                                  ),
+                              ),
+                              Text(
+                                'سورة ${surah['name']}',
+                                textHeightBehavior: TextHeightBehavior(
+                                  applyHeightToFirstAscent: false,
                                 ),
-                              ],
-                            ),
+                                style: AppFontStyle.alexandria.copyWith(
+                                  fontSize: 22.sp,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

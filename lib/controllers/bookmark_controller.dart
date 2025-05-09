@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:alfurqan/views/Quran%20View/sura_detail_view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/bookmark_model.dart';
@@ -13,6 +14,7 @@ class BookmarkController extends GetxController {
     'للحفظ',
     'للمراجعة',
     'للقراءة',
+    'للتدبر',
     'مفضلة',
   ];
 
@@ -73,5 +75,12 @@ class BookmarkController extends GetxController {
     return bookmarks
         .where((bookmark) => bookmark.category == selectedCategory.value)
         .toList();
+  }
+
+  // navigateToAyah
+  void navigateToAyah(BookmarkModel bookmark) {
+    Get.to(() => SurahDetailView(
+          initialAyahNumber: bookmark.ayahNumber,
+        ));
   }
 }

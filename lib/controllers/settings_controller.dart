@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'prayer_times_controller.dart';
 import 'tafseer_controller.dart';
 
 class SettingsController extends GetxController {
@@ -22,6 +23,8 @@ class SettingsController extends GetxController {
 
   final SharedPreferences prefs;
   SettingsController(this.prefs);
+
+  var calculationMethod = 3.obs; // القيمة الافتراضية (رابطة العالم الإسلام
 
   @override
   void onInit() {
@@ -42,6 +45,22 @@ class SettingsController extends GetxController {
   void toggleTafseer() {
     showTafseer.toggle();
     update();
+  }
+
+  final Map<int, String> calculationMethods = {
+    1: "جامعة العلوم الإسلامية بكراتشي (باكستان)", //"أم القرى"
+    2: "الجمعية الإسلامية لأمريكا الشمالية (ISNA)", //"الإمارات العربية المتحدة"
+    3: "رابطة العالم الاسلامي", //*
+    4: "ام القرى", //*
+    5: "الهيئة العامة للمساحة المصرية", //*
+    7: "المذهب الشافعي (إندونيسيا وماليزيا)", //
+    8: "الإمارات العربية المتحدة", //*
+  };
+
+  // دالة لتحديث الطريقة
+  void updateCalculationMethod(int method) {
+    calculationMethod.value = method;
+    Get.find<PrayerTimesController>().fetchPrayerTimes(); // إعادة تحميل الأوقات
   }
 
   Future<void> loadAvailableTafseers() async {

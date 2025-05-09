@@ -25,13 +25,13 @@ class TabbarWidget extends StatelessWidget {
         //     fontSize: 16.sp,
         //   ),
         // )),
-        Tab(
-            child: Text(
-          'الاحزاب',
-          style: AppFontStyle.alexandria.copyWith(
-            fontSize: 16.sp,
-          ),
-        )),
+        // Tab(
+        //     child: Text(
+        //   'الاحزاب',
+        //   style: AppFontStyle.alexandria.copyWith(
+        //     fontSize: 16.sp,
+        //   ),
+        // )),
         Tab(
             child: Text(
           'الاجزاء',

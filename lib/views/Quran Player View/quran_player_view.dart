@@ -17,6 +17,8 @@ class QuranPlayerView extends StatelessWidget {
   final ReaderSelectionController readerController = Get.find();
   final AudioPlayer audioPlayer = AudioPlayer();
 
+  QuranPlayerView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final args = Get.arguments;
@@ -24,8 +26,7 @@ class QuranPlayerView extends StatelessWidget {
     final readerName = args["reader"];
     final surahNumber = args["surahNumber"];
     return Scaffold(
-      backgroundColor:
-          Get.isDarkMode ? AppColor.darkColor : AppColor.lightColor,
+      backgroundColor: Get.isDarkMode ? AppColor.darkColor : AppColor.dayColor,
       // appBar: AppBar(
       //   title: Text("Player View"),
       // ),
@@ -112,7 +113,8 @@ class QuranPlayerView extends StatelessWidget {
                   onPressed: () {
                     showCustomSnackbar(
                         title: 'تنبيه',
-                        message: "جاري العمل على تطوير ميزة التحميل");
+                        message:
+                            " جاري العمل على تطوير ميزة التحميل سيتم تفعيلها في اقرب وقت ممكن");
                   },
                 ),
                 IconButton(

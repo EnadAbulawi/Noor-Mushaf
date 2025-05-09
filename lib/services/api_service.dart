@@ -64,6 +64,9 @@ class ApiService {
                   'text': ayah['text'],
                   'surahNumber': surahNumber,
                   'audio': ayah['audio'],
+                  'page': ayah['page'], // تأكد من وجود هذه الحقول في ال API
+                  'juz': ayah['juz'],
+                  'hizb': ayah['hizbQuarter'],
                 }))
             .toList();
       }
@@ -93,7 +96,7 @@ class ApiService {
   // جلب ربع حزب معين
   Future<HizbQuarter> getHizbQuarter(int quarterNumber) async {
     try {
-      final response = await _dio.get('/hizbQuarter/$quarterNumber/ar.alafasy');
+      final response = await _dio.get('/hizbQuarter/$quarterNumber');
       if (response.statusCode == 200 && response.data != null) {
         return HizbQuarter.fromJson(response.data['data']);
       }
